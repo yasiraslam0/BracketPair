@@ -20,6 +20,7 @@ export default class Settings {
     public readonly showBracketsInGutter: boolean;
     public readonly showBracketsInRuler: boolean;
     public readonly scopeLineRelativePosition: boolean;
+    public readonly excludedLanguages: Set<string>;
     public isDisposed = false;
     private readonly gutterIcons: GutterIconManager;
     private readonly activeBracketCSSElements: string[][];
@@ -37,6 +38,14 @@ export default class Settings {
 
         const configuration = vscode.workspace.getConfiguration("bracketPairColorizer", documentUri);
         const activeScopeCSS = configuration.get("activeScopeCSS") as string[];
+
+        const excludedLanguages = configuration.get("excludedLanguages") as string[];
+
+        if (!Array.isArray(excludedLanguages)) {
+            throw new Error("excludedLanguages is not an array");
+        }
+
+        this.excludedLanguages = new Set(excludedLanguages);
 
         if (!Array.isArray(activeScopeCSS)) {
             throw new Error("activeScopeCSS is not an array");

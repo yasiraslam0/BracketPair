@@ -80,6 +80,9 @@ Choose a border style to highlight the active scope. Use `{color}` to match the 
 > A new bracket pair can be configured by adding it to the array.  
 > Note: Pair must be supported punctuation type by Prism.js
 
+> `"bracketPairColorizer.excludedLanguages"`   
+> Exclude languages from being parsed by this extension
+
 ### Commands
 
 These commands will expand/undo the cursor selection to the next scope

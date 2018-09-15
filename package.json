@@ -194,6 +194,12 @@
                     ],
                     "description": "Define paired characters and their color groups",
                     "scope": "resource"
+                },
+                "bracketPairColorizer.excludedLanguages": {
+                    "type": "array",
+                    "default": [],
+                    "description": "Don't colorize files of these languages",
+                    "scope": "window"
                 }
             }
         }

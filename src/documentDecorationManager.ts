@@ -101,11 +101,17 @@ export default class DocumentDecorationManager {
             try {
                 const languages = this.getPrismLanguageID(document.languageId);
                 const primaryLanguage = languages[0];
+
                 if (!this.supportedLanguages.has(primaryLanguage)) {
                     return;
                 }
 
                 const settings = new Settings(primaryLanguage, this.gutterIcons, document.uri);
+
+                if (settings.excludedLanguages.has(document.languageId)) {
+                    return;
+                }
+
                 documentDecorations = new DocumentDecoration(document, this.Prism, settings);
                 this.documents.set(uri, documentDecorations);
             } catch (error) {

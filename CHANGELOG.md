@@ -1,5 +1,9 @@
 ## Release Notes
 
+### 1.0.60
+Delay startup by 500ms to let other extensions activate first (Thanks @ypresto)  
+Allow languages to be excluded from parsing (Thanks @SeedyROM)
+
 ### 1.0.59
 Update to PrismJS 1.50.0
 
