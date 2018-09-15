@@ -1,5 +1,11 @@
 # Bracket Pair Colorizer
 
+---
+
+#### Announcement: A new version is being developed at https://github.com/CoenraadS/Bracket-Pair-Colorizer-2
+
+---
+
 This extension allows matching brackets to be identified with colours. The user can define which characters to match, and which colours to use.
 
 Screenshot:  
