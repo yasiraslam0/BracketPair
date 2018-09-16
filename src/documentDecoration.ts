@@ -1,8 +1,6 @@
 import * as prism from "prismjs";
 import * as vscode from "vscode";
-import Bracket from "./bracket";
 import FoundBracket from "./foundBracket";
-import GutterIconManager from "./gutterIconManager";
 import Scope from "./scope";
 import Settings from "./settings";
 import TextLine from "./textLine";
