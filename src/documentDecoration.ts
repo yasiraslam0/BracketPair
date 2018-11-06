@@ -1,8 +1,6 @@
-import * as prism from "prismjs";
+import * as Prism from "prismjs";
 import * as vscode from "vscode";
-import Bracket from "./bracket";
 import FoundBracket from "./foundBracket";
-import GutterIconManager from "./gutterIconManager";
 import Scope from "./scope";
 import Settings from "./settings";
 import TextLine from "./textLine";
@@ -18,7 +16,6 @@ export default class DocumentDecoration {
     private readonly document: vscode.TextDocument;
     private nextScopeEvent: vscode.TextEditorSelectionChangeEvent | undefined;
     private previousScopeEvent: vscode.TextEditorSelectionChangeEvent | undefined;
-    private readonly prismJs: any;
     private readonly largeFileRange: vscode.Range;
     private scopeDecorations: vscode.TextEditorDecorationType[] = [];
     private scopeSelectionHistory: vscode.Selection[][] = [];
@@ -28,13 +25,12 @@ export default class DocumentDecoration {
         (content: string, lineIndex: number, charIndex: number, positions: FoundBracket[]) =>
             { lineIndex: number, charIndex: number }>();
     private readonly stringOrTokenArrayStrategies = new Map<string,
-        (array: Array<string | prism.Token>, lineIndex: number, charIndex: number, positions: FoundBracket[]) =>
+        (array: Array<string | Prism.Token>, lineIndex: number, charIndex: number, positions: FoundBracket[]) =>
             { lineIndex: number, charIndex: number }>();
 
-    constructor(document: vscode.TextDocument, prismJs: any, settings: Settings) {
+    constructor(document: vscode.TextDocument, settings: Settings) {
         this.settings = settings;
         this.document = document;
-        this.prismJs = prismJs;
         this.largeFileRange = new vscode.Range(new vscode.Position(0, 0), new vscode.Position(5000, 0));
 
         const basicStringMatch = (
@@ -63,7 +59,7 @@ export default class DocumentDecoration {
 
         if (settings.prismLanguageID === "markdown") {
             const markdownUrl = (
-                array: Array<string | prism.Token>,
+                array: Array<string | Prism.Token>,
                 lineIndex: number,
                 charIndex: number,
                 positions: FoundBracket[]) => {
@@ -453,9 +449,9 @@ export default class DocumentDecoration {
         const languageID = this.settings.prismLanguageID;
 
         const text = this.document.getText(this.largeFileRange);
-        let tokenized: Array<string | prism.Token>;
+        let tokenized: Array<string | Prism.Token>;
         try {
-            tokenized = this.prismJs.tokenize(text, this.prismJs.languages[languageID]);
+            tokenized = Prism.tokenize(text, Prism.languages[languageID]);
             if (!tokenized) {
                 console.log("Could not tokenize document: " + this.document.fileName);
                 return;
@@ -485,7 +481,7 @@ export default class DocumentDecoration {
         charIndex: number,
         positions: FoundBracket[]) {
         tokenized.forEach((token) => {
-            if (token instanceof this.prismJs.Token) {
+            if (token instanceof Prism.Token) {
                 const result = this.parseToken(token, lineIndex, charIndex, positions);
                 charIndex = result.charIndex;
                 lineIndex = result.lineIndex;
@@ -512,7 +508,7 @@ export default class DocumentDecoration {
     }
 
     private parseToken(
-        token: prism.Token,
+        token: Prism.Token,
         lineIndex: number,
         charIndex: number,
         positions: FoundBracket[]): { lineIndex: number, charIndex: number } {
@@ -556,7 +552,7 @@ export default class DocumentDecoration {
 
     // Array can be Token or String. Indexes are which indexes should be parsed for brackets
     private matchStringOrTokenArray(
-        indexes: Set<number>, array: Array<string | prism.Token>,
+        indexes: Set<number>, array: Array<string | Prism.Token>,
         lineIndex: number, charIndex: number, positions: FoundBracket[]) {
         for (let i = 0; i < array.length; i++) {
             const content = array[i];
