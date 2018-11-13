@@ -1,24 +1,19 @@
 import {
-    Selection, TextDocument, TextDocumentChangeEvent,
-    TextDocumentContentChangeEvent, TextEditor, TextEditorSelectionChangeEvent, window,
+    TextDocument, TextDocumentChangeEvent,
+    TextEditor, TextEditorSelectionChangeEvent, window,
 } from "vscode";
 import DocumentDecoration from "./documentDecoration";
 import GutterIconManager from "./gutterIconManager";
 import Settings from "./settings";
 
 export default class DocumentDecorationManager {
-    private readonly Prism = require("prismjs/components/prism-core.js");
     private readonly loadLanguages = require("prismjs/components/index.js");
+    private readonly loadedLanguages = new Set<string>();
     private readonly components = require("prismjs/components");
-    private readonly supportedLanguages: Set<string>;
+    private readonly supportedLanguages = new Set(Object.keys(this.components.languages));
     private readonly gutterIcons = new GutterIconManager();
     private showError = true;
     private documents = new Map<string, DocumentDecoration>();
-
-    constructor() {
-        this.supportedLanguages = new Set(Object.keys(this.components.languages));
-        this.loadLanguages();
-    }
 
     public Dispose() {
         this.documents.forEach((document, key) => {
@@ -112,7 +107,8 @@ export default class DocumentDecorationManager {
                     return;
                 }
 
-                documentDecorations = new DocumentDecoration(document, this.Prism, settings);
+                this.loadLanguageOnce(primaryLanguage);
+                documentDecorations = new DocumentDecoration(document, settings);
                 this.documents.set(uri, documentDecorations);
             } catch (error) {
                 if (error instanceof Error) {
@@ -164,5 +160,13 @@ export default class DocumentDecorationManager {
         }
 
         return true;
+    }
+
+    private loadLanguageOnce(prismLanguageId: string) {
+        if (this.loadedLanguages.has(prismLanguageId)) {
+            return;
+        }
+        this.loadLanguages([prismLanguageId]);
+        this.loadedLanguages.add(prismLanguageId);
     }
 }
