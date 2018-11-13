@@ -1,5 +1,8 @@
 ## Release Notes
 
+### 1.0.61
+Remove startup delay and load languages on demand (Thanks @ypresto)  
+
 ### 1.0.60
 Delay startup by 500ms to let other extensions activate first (Thanks @ypresto)  
 Allow languages to be excluded from parsing (Thanks @SeedyROM)
