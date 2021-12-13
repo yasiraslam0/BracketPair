@@ -18,7 +18,7 @@ export default class DocumentDecoration {
     private previousScopeEvent: vscode.TextEditorSelectionChangeEvent | undefined;
     private readonly largeFileRange: vscode.Range;
     private scopeDecorations: vscode.TextEditorDecorationType[] = [];
-    private scopeSelectionHistory: vscode.Selection[][] = [];
+    private scopeSelectionHistory: (readonly vscode.Selection[])[] = [];
 
     // What have I created..
     private readonly stringStrategies = new Map<string,
@@ -79,7 +79,7 @@ export default class DocumentDecoration {
         this.disposeScopeDecorations();
     }
 
-    public onDidChangeTextDocument(contentChanges: vscode.TextDocumentContentChangeEvent[]) {
+    public onDidChangeTextDocument(contentChanges: readonly vscode.TextDocumentContentChangeEvent[]) {
         this.updateLowestLineNumber(contentChanges);
         this.triggerUpdateDecorations();
     }
@@ -88,7 +88,7 @@ export default class DocumentDecoration {
         const newSelections: vscode.Selection[] = [];
 
         editor.selections.forEach((selection) => {
-            let selections: vscode.Selection[] = [];
+            let selections: readonly vscode.Selection[] = [];
 
             if (this.scopeSelectionHistory.length !== 0) {
                 selections = this.scopeSelectionHistory[this.scopeSelectionHistory.length - 1];
@@ -417,7 +417,7 @@ export default class DocumentDecoration {
         }
     }
 
-    private updateLowestLineNumber(contentChanges: vscode.TextDocumentContentChangeEvent[]) {
+    private updateLowestLineNumber(contentChanges: readonly vscode.TextDocumentContentChangeEvent[]) {
         for (const contentChange of contentChanges) {
             this.lineToUpdateWhenTimeoutEnds =
                 Math.min(this.lineToUpdateWhenTimeoutEnds, contentChange.range.start.line);
