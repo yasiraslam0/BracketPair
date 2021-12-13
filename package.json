@@ -2,10 +2,10 @@
     "name": "bracket-pair-colorizer",
     "displayName": "Bracket Pair Colorizer",
     "description": "A customizable extension for colorizing matching brackets",
-    "version": "1.0.60",
+    "version": "1.0.62",
     "publisher": "CoenraadS",
     "engines": {
-        "vscode": "^1.23.0"
+        "vscode": "^1.45.0"
     },
     "icon": "images/icon.png",
     "categories": [
@@ -200,14 +200,19 @@
                     "default": [],
                     "description": "Don't colorize files of these languages",
                     "scope": "window"
+                },
+                "bracketPairColorizer.depreciation-notice": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show notice extension is deprecated",
+                    "scope": "window"
                 }
             }
         }
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",
-        "compile": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install"
+        "compile": "tsc -watch -p ./"
     },
     "devDependencies": {
         "@types/mocha": "^2.2.32",
@@ -215,8 +220,7 @@
         "@types/prismjs": "^1.9.0",
         "mocha": "^2.3.3",
         "tslint": "^4.5.1",
-        "typescript": "^2.8.3",
-        "vscode": "^1.1.16"
+        "typescript": "^4.3.2"
     },
     "repository": {
         "type": "git",
@@ -224,6 +228,7 @@
     },
     "license": "SEE LICENSE IN LICENSE.md",
     "dependencies": {
+        "@types/vscode": "^1.57.0",
         "escape-html": "^1.0.3",
         "prismjs": "^1.15.0",
         "vscode-uri": "^1.0.3"

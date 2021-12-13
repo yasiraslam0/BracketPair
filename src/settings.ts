@@ -184,7 +184,7 @@ export default class Settings {
                 throw new Error("independentPairColors is not an array");
             }
 
-            independentSettings.forEach((innerArray, index) => {
+            independentSettings.forEach((innerArray: unknown, index) => {
                 if (!Array.isArray(innerArray)) {
                     throw new Error("independentPairColors[" + index + "] is not an array");
                 }

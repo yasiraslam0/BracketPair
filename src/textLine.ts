@@ -1,7 +1,6 @@
 import { Position, Range } from "vscode";
 import FoundBracket from "./foundBracket";
 import LineState from "./lineState";
-import ModifierPair from "./modifierPair";
 import Scope from "./scope";
 import Settings from "./settings";
 

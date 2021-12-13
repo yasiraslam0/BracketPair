@@ -1,4 +1,36 @@
+
+---
+
+# 🎄 Christmas Notice ☃️
+
+### This project started on 3 Dec 2016. Now 5 years later, it has become a native feature in VSCode.
+
+### This extension has seen wilder success then I could over ever dreamed of, with over 10M+ downloads.
+
+### However since native functionality is available, it's time to deprecate this extension
+
+### If you enjoyed it, a coffee donation is appreciated:
+### Merry Christmas and Happy New Year!
+
+# 🎁 [Donate](https://ko-fi.com/bracketpaircolorizer) 🎁
+
+
+## How to enable native bracket matching:
+
+`settings.json`
+```
+{
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs":"active"
+}
+```
+
+---
+
 ## Release Notes
+
+### 1.0.61
+Remove startup delay and load languages on demand (Thanks @ypresto)  
 
 ### 1.0.60
 Delay startup by 500ms to let other extensions activate first (Thanks @ypresto)  
